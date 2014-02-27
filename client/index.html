@@ -23,13 +23,13 @@
 
     <!-- The app -->
     <script src="app.js"></script>
+    <script src="controllers.js"></script>
   </head>
 
   <body>
     <div class="container">
-      <a href="/">/</a>
-      <a href="/about">About</a>
       <div ng-view></div>
+      <div id="footer" ng-controller="FooterCtrl" ng-include="'/templates/footer.html'"></div>
     </div>
   </body>
 </html>
