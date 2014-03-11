@@ -12,7 +12,18 @@ cd client
 ./config.ru
 ```
 
+# Deployment
+
+- Run `./server/app.js` (this should have a start-up script in the future).
+- Configure Nginx to use `vhost.conf`.
+- Go to [blog.101ideas.cz](http://blog.101ideas.cz) and it should just work. Well ... if you own that domain ;)
+
 ## TODO
 
+- Start-up script.
 - Create/edit posts.
 - Markdown.
+- Tags.
+
+- GA.
+- Disquis.
