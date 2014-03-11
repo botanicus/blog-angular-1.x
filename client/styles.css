@@ -1,0 +1,5 @@
+.publishedDate { color: grey; font-style: italic; }
+.follow-me { font-style: italic; }
+
+h1.logo a { color: red; }
+h1.logo a:hover { text-decoration: none; }

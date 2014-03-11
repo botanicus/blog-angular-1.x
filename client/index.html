@@ -1,6 +1,7 @@
 <!DOCTYPE html>
 <html lang="en" ng-app="app">
   <head>
+    <base href="/">
     <meta charset="utf-8">
     <meta http-equiv="X-UA-Compatible" content="IE=edge">
     <meta name="viewport" content="width=device-width, initial-scale=1">
@@ -24,12 +25,15 @@
     <!-- The app -->
     <script src="app.js"></script>
     <script src="controllers.js"></script>
+    <script src="services.js"></script>
+    <link rel="stylesheet" href="styles.css">
   </head>
 
   <body>
     <div class="container">
+      <h1 class="logo"><a href="/">Blog</a></h1>
       <div ng-view></div>
-      <div id="footer" ng-controller="FooterCtrl" ng-include="'/templates/footer.html'"></div>
+      <div id="footer" ng-controller="LayoutCtrl" ng-include="'/templates/footer.html'"></div>
     </div>
   </body>
 </html>

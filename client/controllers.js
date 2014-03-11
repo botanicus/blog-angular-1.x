@@ -1,6 +1,7 @@
 // Partial controllers.
-app.controller('FooterCtrl', ['$scope', '$location',
+app.controller('LayoutCtrl', ['$scope', '$location',
   function ($scope, $location) {
+    // So we can hide link to the currently selected page.
     $scope.isSelected = function (path) {
       return path === $location.path();
     }
@@ -13,10 +14,14 @@ app.controller('AboutCtrl', ['$scope',
   }
 ]);
 
-app.controller('IndexCtrl', ['$scope', '$http',
-  function ($scope, $http) {
-    $http.get('/posts.json?count=5').success(function (data) {
-      $scope.posts = data;
-    });
+app.controller('IndexCtrl', ['$scope', 'Post',
+  function ($scope, Post) {
+    $scope.posts = Post.query();
+  }
+]);
+
+app.controller('PostCtrl', ['$scope', '$routeParams', 'Post',
+  function ($scope, $routeParams, Post) {
+    $scope.post = Post.get({slug: $routeParams.slug});
   }
 ]);
