@@ -1,4 +1,4 @@
 # vhost.conf might have changed.
-restart nginx
+restart nginx || start nginx
 
 restart blog.server

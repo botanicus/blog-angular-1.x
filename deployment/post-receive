@@ -61,8 +61,8 @@ cd $(dirname $TARGET)
 # Only deployment branch.
 if [ $BRANCH != 'deployment' ]; then
   echo
-  info "Glad you're working mate ;)"
-  info "If you wanna deploy, run git push origin master:deployment"
+  info "Nice one, keep it up!"
+  info "If you want to deploy, run git deploy"
   echo
   exit
 fi
@@ -86,13 +86,13 @@ debug "Node: $(which node) $(node --version)"
 debug
 debug "=== Git-deployer ==="
 debug "NAME: $NAME"
-# debug "BRANCH: $BRANCH"
+debug "BRANCH: $BRANCH"
 debug "SOURCE: $SOURCE"
 debug "TARGET: $TARGET"
 debug
 
 
-info "Deploying the repository"
+info "Deploying the repository."
 
 if [ -d $TARGET ] ; then
   cd $TARGET
@@ -109,14 +109,14 @@ if [ -d $TARGET ] ; then
   git commit -m "Deployment on $(hostname) at $(date '+%Y-%m-%d %H:%M:%S')" 2> /dev/null
   git tag -a $(date '+%Y-%m-%d-%H-%M-%S') -m "Deployment at $(date '+%Y-%m-%d %H:%M:%S')"
 
-  if [ $old != "0000000000000000000000000000000000000000" ]; then
+  # if [ $old != "0000000000000000000000000000000000000000" ]; then
     echo
     info "Changes in this deployment:"
     echo
     git log --color $old..$new
-  else
-    info "Initial deployment."
-  fi
+  # else
+  #   info "Initial deployment."
+  # fi
 
   echo
 else
@@ -124,6 +124,7 @@ else
   git clone $SOURCE
 
   cd $TARGET
+  git reset $new --hard
   load_or_run deployment/hooks/clone
 
   echo

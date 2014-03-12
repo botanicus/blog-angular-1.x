@@ -1,0 +1,4 @@
+# Register new vhost.conf.
+restart nginx || start nginx
+
+start blog.server
