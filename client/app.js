@@ -5,8 +5,9 @@ function router ($routeProvider, $locationProvider) {
   $routeProvider.
     when('/', {templateUrl: 'templates/posts.html', controller: 'IndexCtrl'}).
     when('/about', {templateUrl: 'templates/about.html', controller: 'AboutCtrl'}).
-    // when('/posts/:slug', {controller: 'PostCtrl'});
-    when('/posts/:slug', {templateUrl: 'templates/post.html', controller: 'PostCtrl'});
+    when('/posts/:slug', {templateUrl: 'templates/post.html', controller: 'PostCtrl'}).
+    when('/tags/:tag', {templateUrl: 'templates/posts.html', controller: 'TagCtrl'}).
+    when('/admin/posts/new', {templateUrl: 'templates/post.html', controller: 'PostCtrl'});
 
   /*
     How routing in AngularJS works:

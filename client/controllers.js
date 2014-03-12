@@ -20,6 +20,10 @@ app.controller('IndexCtrl', ['$scope', 'Post',
   }
 ]);
 
+app.controller('TagCtrl', function ($scope, Post, $routeParams) {
+  $scope.posts = Post.query({tag: $routeParams.tag});
+});
+
 app.controller('PostCtrl', ['$scope', '$routeParams', 'Post',
   function ($scope, $routeParams, Post) {
     $scope.post = Post.get({slug: $routeParams.slug});

@@ -31,7 +31,10 @@ cd client
 
 - Auth.
 - Create/edit posts (including drafts & scheduling using if publishedAt > Time.now ... ).
-- Tags.
+- Post list: show drafts & unpublished if authenticated.
+- Server-side support for filtering by tags /posts.json?tag=ruby.
+- Sort by updatedAt.
+- Show when updated (if the post was updated).
 
 - GA.
 - Disquis.
