@@ -1,4 +1,4 @@
-app = angular.module('app', ['ui.bootstrap', 'ngRoute', 'services']);
+app = angular.module('app', ['ui.bootstrap', 'ngRoute', 'services', 'markdown']);
 
 // Router.
 function router ($routeProvider, $locationProvider) {
