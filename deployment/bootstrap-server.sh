@@ -1,5 +1,8 @@
 #!/bin/sh
 
+# Re-deploy:
+# ssh server "rm -rf /repos/blog /webs/blog"; ./deployment/bootstrap-server.sh ; git deploy
+
 PROJECT=blog
 
 ssh server "mkdir -p /repos && git init --bare /repos/$PROJECT"
