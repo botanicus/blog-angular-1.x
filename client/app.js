@@ -3,7 +3,7 @@ app = angular.module('app', ['ui.bootstrap', 'ngRoute', 'services', 'markdown'])
 // Router.
 function router ($routeProvider, $locationProvider) {
   $routeProvider.
-    when('/', {templateUrl: 'templates/index.html', controller: 'IndexCtrl'}).
+    when('/', {templateUrl: 'templates/posts.html', controller: 'IndexCtrl'}).
     when('/about', {templateUrl: 'templates/about.html', controller: 'AboutCtrl'}).
     // when('/posts/:slug', {controller: 'PostCtrl'});
     when('/posts/:slug', {templateUrl: 'templates/post.html', controller: 'PostCtrl'});
