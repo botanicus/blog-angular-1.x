@@ -1,0 +1,4 @@
+# vhost.conf might have changed.
+restart nginx
+
+restart blog.server

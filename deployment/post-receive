@@ -1,0 +1,132 @@
+#!/bin/zsh
+
+# POST-RECEIVE HOOK
+# ARGV: empty
+# STDIN: [OLD HEAD] [NEW HEAD] refs/heads/alpha
+
+unset GIT_DIR
+
+#### FUNCTIONS ####
+error()   { printf "\e[1;31m$*\e[0m\n\n"; }
+abort()   { error $*; exit 1; }
+success() { printf "\e[1;32m$*\e[0m\n"; }
+info()    { printf "\e[1;34m$*\e[0m\n"; }
+debug()   { $DEBUG && printf "\e[1;33m$*\e[0m\n"; }
+run()     { info $* ; $*; }
+
+trim () {
+  echo $1 | cut -c 1-5
+}
+
+load_or_run () {
+  if [ -x $1 ] ; then
+    info "Running ./$1"
+    ./$1
+  elif [ -f $1 ] ; then
+    info "Loading $1"
+    . $1 # so user can use functions defined in this hook in his update hook
+  else
+    error "Hook $1 wasn't found in $PWD!"
+  fi
+}
+
+
+#### ENV ####
+export TERM="xterm-color"
+
+set -- $(cat /dev/stdin)
+
+old=$1 && new=$2 && ref=$3
+
+export DEBUG=true
+
+export NAME=$(basename $PWD)
+export BRANCH=$(basename $ref)
+
+export SOURCE=$PWD
+
+# This has to be here for the cd on line 24.
+# if [ $NAME = 'matcher' ]; then
+#   export TARGET="/webs/matcher"
+# else
+#   export TARGET="/webs/matcher/$NAME"
+# fi
+export TARGET="/webs/blog"
+
+cd $(dirname $TARGET)
+
+
+#### LIMIT BRANCH ####
+
+# Only deployment branch.
+if [ $BRANCH != 'deployment' ]; then
+  echo
+  info "Glad you're working mate ;)"
+  info "If you wanna deploy, run git push origin master:deployment"
+  echo
+  exit
+fi
+
+
+echo
+info "Reading /etc/environment"
+. /etc/environment
+
+# The target might not exist yet.
+cd $(dirname $TARGET)
+
+debug
+debug "=== Environment ==="
+# debug "PATH: $PATH"
+debug "USER: $USER"
+debug "PWD: $PWD"
+# debug "TERM: $TERM"
+# debug "Ruby: $(which ruby)"
+debug "Node: $(which node) $(node --version)"
+debug
+debug "=== Git-deployer ==="
+debug "NAME: $NAME"
+# debug "BRANCH: $BRANCH"
+debug "SOURCE: $SOURCE"
+debug "TARGET: $TARGET"
+debug
+
+
+info "Deploying the repository"
+
+if [ -d $TARGET ] ; then
+  cd $TARGET
+  info "Updating $PWD $(trim $old) -> $(trim $new)"
+
+  git fetch
+  git reset $new --hard
+
+  load_or_run hooks/update
+
+  echo
+  info "Tagging this deployment"
+  git add .
+  git commit -m "Deployment on $(hostname) at $(date '+%Y-%m-%d %H:%M:%S')" 2> /dev/null
+  git tag -a $(date '+%Y-%m-%d-%H-%M-%S') -m "Deployment at $(date '+%Y-%m-%d %H:%M:%S')"
+
+  if [ $old != "0000000000000000000000000000000000000000" ]; then
+    echo
+    info "Changes in this deployment:"
+    echo
+    git log --color $old..$new
+  else
+    info "Initial deployment."
+  fi
+
+  echo
+else
+  info "Cloning into $TARGET (HEAD: $(trim $new))"
+  git clone $SOURCE
+
+  cd $TARGET
+  load_or_run deployment/hooks/clone
+
+  echo
+  info "The master repo is deployed now."
+  echo
+fi
