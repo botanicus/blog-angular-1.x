@@ -1,4 +1,6 @@
 # Register new vhost.conf.
 restart nginx || start nginx
 
-start blog.server
+# Restart if we have deployed before and
+# deleted the repo without stopping the thingy.
+start blog.server || restart blog.server
