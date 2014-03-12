@@ -20,7 +20,7 @@
 
     <!-- Bootstrap components rewritten in Angular.js -->
     <!-- http://angular-ui.github.io/bootstrap -->
-    <script src="vendor/ui-bootstrap.js"></script>
+    <script src="vendor/ui-bootstrap-tpls.js"></script>
 
     <!-- The app -->
     <script src="app.js"></script>
@@ -34,6 +34,7 @@
       <h1 class="logo"><a href="/">Blog</a></h1>
       <div ng-view></div>
       <div id="footer" ng-controller="LayoutCtrl" ng-include="'/templates/footer.html'"></div>
+      <a href="#" ng-controller="LoginCtrl" ng-click="showLoginBox()" ng-hide="authenticated">Log in</a>
     </div>
   </body>
 </html>
