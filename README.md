@@ -30,8 +30,7 @@ cd client
 ## TODO
 
 - Auth.
-- Create/edit posts.
-- Markdown.
+- Create/edit posts (including drafts & scheduling using if publishedAt > Time.now ... ).
 - Tags.
 
 - GA.
