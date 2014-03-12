@@ -101,7 +101,7 @@ if [ -d $TARGET ] ; then
   git fetch
   git reset $new --hard
 
-  load_or_run hooks/update
+  load_or_run deployment/hooks/update
 
   echo
   info "Tagging this deployment"
