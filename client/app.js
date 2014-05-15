@@ -41,6 +41,12 @@ function router ($routeProvider, $locationProvider) {
     So in Sinatra you have get '/example/ask/:collaborator_id'
     to render the proper template and then in Angular you do
     when('/example/ask/:collaboratorId').
+    
+    In leadsorama we had problem that going to / not logged in
+    rendered index.html, whereas if you were logged in, you got
+    to app.html. So ... if you weren't logged in, going to
+    /#/leads/inbox (say you were following a link from the digest)
+    would do bloody fucking nothing. That s.u.c.k.s!
   */
 
   $locationProvider.html5Mode(true);
